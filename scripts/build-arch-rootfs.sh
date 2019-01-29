@@ -6,12 +6,12 @@ mkfs.ext4 /output/arch-rootfs.ext4
 mkdir -p arch
 mount /output/arch-rootfs.ext4 arch
 
+echo "Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 pacstrap -i -c $(readlink -f arch) bash filesystem systemd-sysvcompat pacman iproute2
 
-echo "Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch" > arch/etc/pacman.d/mirrorlist
 echo "nameserver 114.114.114.114" > arch/etc/resolv.conf
 
-tee /etc/systemd/system/firecracker-network.service <<-'EOF'
+tee arch/etc/systemd/system/firecracker-network.service <<-'EOF'
 [Unit]
 Description=Firecracker Network
 
