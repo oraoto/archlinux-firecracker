@@ -33,9 +33,10 @@ sed 's/\(.*\)VIDEO\(.*\)=y/\1VIDEO\2=n/g' -i .config
 sed 's/\(.*\)PCI\(.*\)=y/\1PCI\2=n/g' -i .config
 sed 's/\(.*\)WLAN\(.*\)=y/\1WLAN\2=n/g' -i .config
 
-## Add Virtio and filesystem back
+## Add Virtio, filesystem, network
 cat /config/virtio.config >> .config
 cat /config/fs.config >> .config
+cat /config/net.config >> .config
 
 yes '' | make -j4
 
