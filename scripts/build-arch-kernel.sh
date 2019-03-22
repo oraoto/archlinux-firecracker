@@ -7,7 +7,7 @@ mkdir -p /build
 cd /build
 
 ## Install build tools
-echo "Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
+echo "Server = http://mirrors.163.com/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 pacman -Syu --noconfirm base-devel bc --ignore linux-firmware
 
 ## Get kernel source

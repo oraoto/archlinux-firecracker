@@ -6,7 +6,7 @@ curl --unix-socket /tmp/firecracker.socket -i \
      -H 'Content-Type: application/json'     \
      -d '{
           "kernel_image_path": "./output/arch-vmlinux.bin",
-          "boot_args": "console=ttyS0 noapic reboot=k panic=1 pci=off nomodules 8250.nr_uarts=1 root=/dev/vda rw"
+          "boot_args": "console=ttyS0 noapic reboot=k panic=1 pci=off nomodules 8250.nr_uarts=1 i8042.noaux i8042.nomux i8042.nopnp i8042.dumbkbd root=/dev/vda rw"
      }'
 
 curl --unix-socket /tmp/firecracker.socket -i \
