@@ -1,4 +1,3 @@
 arch
-arch-rootfs.ext4
-arch-vmlinux.bin
-bzImage
+build
+output

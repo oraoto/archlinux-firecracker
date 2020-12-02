@@ -37,7 +37,8 @@ curl --unix-socket /tmp/firecracker.socket -i  \
     -H 'Content-Type: application/json'      \
     -d '{
         "vcpu_count": 1,
-        "mem_size_mib": 256
+        "mem_size_mib": 256,
+        "ht_enabled": false
     }'
 
 curl --unix-socket /tmp/firecracker.socket -i \

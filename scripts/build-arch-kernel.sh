@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
-KERNEL_VERSION=4.20.3
+KERNEL_VERSION=5.9.9
 
-mkdir -p /build
+mkdir -p build
 
-cd /build
+cd build
 
 ## Install build tools
-echo "Server = http://mirrors.163.com/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
-pacman -Syu --noconfirm base-devel bc --ignore linux-firmware
+# pacman -Syu --noconfirm base-devel bc dwarves --ignore linux-firmware
 
 ## Get kernel source
-curl -o linux.tar.xz "https://mirrors.tuna.tsinghua.edu.cn/kernel/v4.x/linux-$KERNEL_VERSION.tar.xz"
+curl -o linux.tar.xz "https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-$KERNEL_VERSION.tar.xz"
 tar xf linux.tar.xz
 cd linux-$KERNEL_VERSION/
 
@@ -30,14 +29,17 @@ sed 's/\(.*\)NVDIMM\(.*\)=y/\1NVDIMM\2=n/g' -i .config
 sed 's/\(.*\)MFD\(.*\)=y/\1MFD\2=n/g' -i .config
 sed 's/\(.*\)XEN\(.*\)=y/\1XEN\2=n/g' -i .config
 sed 's/\(.*\)VIDEO\(.*\)=y/\1VIDEO\2=n/g' -i .config
-sed 's/\(.*\)PCI\(.*\)=y/\1PCI\2=n/g' -i .config
+# sed 's/\(.*\)PCI\(.*\)=y/\1PCI\2=n/g' -i .config
 sed 's/\(.*\)WLAN\(.*\)=y/\1WLAN\2=n/g' -i .config
+sed 's/\(.*\)DRM\(.*\)=y/\1DRM\2=n/g' -i .config
 
-## Add Virtio, filesystem, network
-cat /config/virtio.config >> .config
-cat /config/fs.config >> .config
-cat /config/net.config >> .config
+cat ../../config/virtio.config >> .config
+cat ../../config/fs.config >> .config
+cat ../../config/net.config >> .config
 
-yes '' | make -j4
+## Add KVM guest support
+make kvm_guest.config
 
-./scripts/extract-vmlinux ./arch/x86_64/boot/bzImage > /output/arch-vmlinux.bin
+make -j$(nproc)
+
+./scripts/extract-vmlinux ./arch/x86_64/boot/bzImage > ../../output/arch-vmlinux.bin

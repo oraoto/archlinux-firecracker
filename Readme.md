@@ -15,6 +15,7 @@ Build linux kernel and rootfs in the `output` directory:
 The rootfs is pre-configured with network support according to [Getting Started Firecracker Network Setup](https://github.com/firecracker-microvm/firecracker/blob/master/docs/network-setup.md#on-the-host). Run these commands to setup the host:
 
 ```shell
+# change IF to your actual NIC
 IF=enp2s0
 sudo ip tuntap add tap0 mode tap
 sudo ip addr add 172.16.0.1/24 dev tap0
@@ -38,3 +39,5 @@ And in anthor terminal:
 ```shell
 ./run.sh
 ```
+
+Then you can login as root in the firecracker terminal.

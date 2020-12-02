@@ -1,15 +1,8 @@
 #!/usr/bin/env bash
 
-fallocate -l 4G /output/arch-rootfs.ext4
-mkfs.ext4 /output/arch-rootfs.ext4
+yes y | pacstrap -i -c arch bash filesystem systemd-sysvcompat pacman iproute2
 
-mkdir -p arch
-mount /output/arch-rootfs.ext4 arch
-
-echo "Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
-pacstrap -i -c $(readlink -f arch) bash filesystem systemd-sysvcompat pacman iproute2
-
-echo "nameserver 114.114.114.114" > arch/etc/resolv.conf
+echo "nameserver 1.1.1.1" > arch/etc/resolv.conf
 
 tee arch/etc/systemd/system/firecracker-network.service <<-'EOF'
 [Unit]
@@ -28,6 +21,7 @@ EOF
 
 ln -s /etc/systemd/system/firecracker-network.service arch/etc/systemd/system/multi-user.target.wants/
 
-umount -R arch
+# Remove default (locked) root password
+# See https://github.com/archlinux/svntogit-packages/commit/0320c909f3867d47576083e853543bab1705185b
 
-rmdir arch
+sed 's/^root:.*/root::14871::::::/' -i arch/etc/shadow
