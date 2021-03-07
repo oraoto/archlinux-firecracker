@@ -1,6 +1,6 @@
 ## ArchLinux on Firecracker
 
-Build ArchLinux rootfs and kernel for [Firecracker](https://github.com/firecracker-microvm/firecracker) using Docker.
+Build ArchLinux rootfs and kernel for [Firecracker](https://github.com/firecracker-microvm/firecracker).
 
 ## Build
 
@@ -33,7 +33,6 @@ Start firecracker in current directory:
 
 ```shell
 firecracker --api-sock /tmp/firecracker.socket --config-file vm-config.json
-```
 ```
 
 Then you can login as root in the terminal.
