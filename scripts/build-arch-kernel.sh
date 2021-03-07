@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-KERNEL_VERSION=5.9.9
+KERNEL_VERSION=5.11.2
 
 mkdir -p build
 
 cd build
 
 ## Install build tools
-# pacman -Syu --noconfirm base-devel bc dwarves --ignore linux-firmware
+# pacman -Syu base-devel bc pahole --ignore linux-firmware
 
 ## Get kernel source
 curl -o linux.tar.xz "https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-$KERNEL_VERSION.tar.xz"

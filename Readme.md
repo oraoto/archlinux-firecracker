@@ -7,7 +7,8 @@ Build ArchLinux rootfs and kernel for [Firecracker](https://github.com/firecrack
 Build linux kernel and rootfs in the `output` directory:
 
 ```shell
-./build.sh
+scripts/build-arch-kernel.sh
+scripts/build-arch-rootfs.sh
 ```
 
 ## Network setup
@@ -16,7 +17,7 @@ The rootfs is pre-configured with network support according to [Getting Started 
 
 ```shell
 # change IF to your actual NIC
-IF=enp2s0
+IF=enp4s0
 sudo ip tuntap add tap0 mode tap
 sudo ip addr add 172.16.0.1/24 dev tap0
 sudo ip link set tap0 up
@@ -31,13 +32,8 @@ sudo iptables -A FORWARD -i tap0 -o $IF -j ACCEPT
 Start firecracker in current directory:
 
 ```shell
-firecracker --api-sock /tmp/firecracker.socket
+firecracker --api-sock /tmp/firecracker.socket --config-file vm-config.json
+```
 ```
 
-And in anthor terminal:
-
-```shell
-./run.sh
-```
-
-Then you can login as root in the firecracker terminal.
+Then you can login as root in the terminal.
